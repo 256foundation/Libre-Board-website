@@ -10,6 +10,7 @@ const title = 'Libre Board'
 const description = 'Open source mining control board'
 const italiannoHref = `${base}fonts/italianno-latin-400-normal.woff2`
 const wordmarkHref = `${base}wordmark.svg`
+const mascotHref = `${base}mascot.svg`
 
 function applyHardwareTokens(token: {
   type: string
@@ -98,7 +99,7 @@ export default defineConfig({
       'style',
       {},
       `@font-face{font-family:"Italianno";src:url("${italiannoHref}") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
-:root{--libre-wordmark:url("${wordmarkHref}");}`
+:root{--libre-wordmark:url("${wordmarkHref}");--libre-mascot:url("${mascotHref}");}`
     ],
     // Social link previews. og:image requires an absolute URL, so it
     // points at production even in a fork preview.

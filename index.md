@@ -8,10 +8,10 @@ hero:
     The motherboard of a miner. Full Linux on a swappable compute
     module, documented I/O, and files you can build from or run as-is.
   image:
-    src: /mascot.svg
+    src: /libreboard-hero.webp
     alt: >-
-      Liberty leading with the flag, the Libre Board mark, taken from
-      the design files.
+      Front render of the Libre Board from the design files, with the
+      backdrop removed.
   actions:
     - theme: brand
       text: Specifications
@@ -73,10 +73,8 @@ Bitcoin node or a local Stratum pool
 Libre Board is part of the [256 Foundation](https://256foundation.org)
 open mining stack, with Mujina, Ember One, and Hydrapool.
 
-The picture above is the Liberty mark from the design files. The
-board renders are below.
-
-![Front of the board, from the KiCad render in the design repository.](/libreboard-front.webp)
+The picture above is the front render from the design files. The
+back, with the Liberty mark in silkscreen, is below.
 
 ![Back of the board, with the Liberty mark and the Libre Board wordmark in silkscreen.](/libreboard-back.webp)
 

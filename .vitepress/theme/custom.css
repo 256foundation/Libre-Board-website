@@ -17,10 +17,14 @@
  * face. Body text, page headings, and the footer line stay Inter.
  * Italianno is weight 400 only. Do not synthesize a bold.
  *
- * Nav mark and hero figure: the Liberty silhouette
- * (public/mascot.svg). Interior gaps are transparent. On a dark
- * surface the black art is inverted in place. The fills stay
- * intact.
+ * Nav mark, and the figure to the left of the hero wordmark:
+ * the Liberty silhouette (public/mascot.svg). Interior gaps are
+ * transparent. On a dark surface that art is inverted in place.
+ * The fills stay intact.
+ *
+ * Hero image, on the right: the front board render with the
+ * backdrop cut away (public/libreboard-hero.webp). It is not
+ * inverted in dark mode.
  */
 
 :root {
@@ -76,25 +80,64 @@
   --libre-hero-tint: rgba(142, 182, 239, 0.1);
 }
 
-/* Hero name: the exact outlined wordmark. The HTML text stays
-   "Libre Board" for the tab and for assistive tech. The box
-   matches the SVG aspect (174.738 / 122.926). */
+/* Hero lockup: Liberty on the left of the outlined wordmark,
+   the same arrangement as the artwork. The HTML text stays
+   "Libre Board" for the tab and for assistive tech. */
 .VPHome .VPHero .name.clip {
-  display: block;
-  width: min(360px, 88vw);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 8px;
+  width: min(500px, 100%);
   max-width: none;
   height: auto;
-  aspect-ratio: 1.4216 / 1;
+  aspect-ratio: auto;
   margin: 0 0 8px;
-  background: var(--libre-wordmark) left center / contain no-repeat;
+  background: none;
   -webkit-background-clip: border-box;
   background-clip: border-box;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  font-size: 28px;
+  font-size: 0;
   line-height: 0;
   letter-spacing: 0;
-  overflow: hidden;
+  overflow: visible;
+}
+
+.VPHome .VPHero .name.clip::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 112px;
+  height: 182px;
+  background: var(--libre-mascot) center bottom / contain no-repeat;
+}
+
+.VPHome .VPHero .name.clip::after {
+  content: "";
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 148px;
+  margin-bottom: 6px;
+  background: var(--libre-wordmark) left center / contain no-repeat;
+}
+
+@media (max-width: 959px) {
+  .VPHome .VPHero .name.clip {
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 639px) {
+  .VPHome .VPHero .name.clip::before {
+    width: 76px;
+    height: 124px;
+  }
+  .VPHome .VPHero .name.clip::after {
+    height: 100px;
+    margin-bottom: 2px;
+  }
 }
 
 /* Nav title: the product name in Italianno. The theme's 600
@@ -130,27 +173,53 @@
   filter: invert(1);
 }
 
-/* Hero figure: portrait, like the firmware site's mascot column. */
-@media (min-width: 640px) {
-  .VPHero .image-container {
-    width: 280px;
-    height: 420px;
+/* Board render on the right. On small screens it stacks under
+   the text. The theme's absolute image and glow would clip a
+   cut-out board, so the picture sits in normal flow. */
+.VPHero .image-bg {
+  display: none;
+}
+
+.VPHero .image-src {
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.22));
+}
+
+@media (max-width: 959px) {
+  .VPHero .main {
+    order: 1;
   }
-  .VPHero .image-src {
-    max-width: 280px;
-    max-height: 420px;
+  .VPHero .image {
+    order: 2;
+    margin: 20px auto 0;
+  }
+  .VPHero .image-container {
+    width: min(420px, 92vw);
+    height: auto;
+  }
+  .VPHero .image-container .image-src {
+    position: static;
+    transform: none;
+    width: 100%;
+    height: auto;
+    max-width: none;
+    max-height: none;
   }
 }
 
 @media (min-width: 960px) {
   .VPHero .image-container {
-    width: 340px;
-    height: 500px;
+    width: 100%;
+    max-width: 460px;
+    height: auto;
     transform: none;
   }
-  .VPHero .image-src {
-    max-width: 340px;
-    max-height: 500px;
+  .VPHero .image-container .image-src {
+    position: static;
+    transform: none;
+    width: 100%;
+    height: auto;
+    max-width: 460px;
+    max-height: none;
   }
   .VPHome .VPHero {
     padding-top: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 16px);
@@ -162,7 +231,7 @@
 }
 
 .dark .VPHero .image-src {
-  filter: invert(1);
+  filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.55));
 }
 
 /* PCB-trace background on the hero: the same 60px pattern

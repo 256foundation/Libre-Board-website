@@ -83,14 +83,18 @@ copy of the branch name in a URL.
 - No em dashes in site copy. The words "honest" and "honestly"
   do not appear. Plain technical English. Short verbs. One fact
   per sentence.
-- The hero name is the extracted script wordmark
-  (`public/wordmark.svg`), from the verified brand files. The
-  nav mark, the hero figure, and the favicon are the Liberty
-  figure (`public/mascot.svg`). Do not trace a new mascot, and
-  do not delete dark pixels to fake a transparent background.
-  Interior gaps in the figure are transparent. On dark surfaces
-  invert the art with a CSS filter so the black linework reads
-  light and the gaps stay transparent. Do not punch new holes.
+- The hero name is a lockup: the Liberty figure
+  (`public/mascot.svg`) on the left of the outlined wordmark
+  (`public/wordmark.svg`). The same figure is the nav mark and
+  the favicon. Do not trace a new mascot, and do not delete
+  dark pixels to fake a transparent background. Interior gaps
+  in the figure are transparent. On dark surfaces invert that
+  art with a CSS filter so the black linework reads light.
+  Do not punch new holes.
+- The picture on the right of the hero is the front board
+  render with the backdrop removed
+  (`public/libreboard-hero.webp`). Do not invert that render
+  in dark mode, and do not color-key dark copper out of it.
 - The script in the artwork is outlined, so the original face
   is unknown. The closest OFL match is Italianno, and it is not
   exact. It is self-hosted
