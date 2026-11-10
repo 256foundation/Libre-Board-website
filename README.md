@@ -1,53 +1,82 @@
-## Open Control Board
-Libre Board is an [open-source](https://opensource.org/license/cern-ohl-s) control board designed for the [Ember One](https://emberone.org) hashboards.
+# libreboard.org
 
-There are no open-source control boards and we set out to change that with this grant. There are many aftermarket control boards but they are all closed source. First and foremost the Libre Board will be built to finalize the Ember One complete mining system. There will be a number of options added to the first Libre Board with the intention of it being able to handle running a Bitcoin full node and stable Stratum server while also running the Ember One hashboards. There will be a wide selection of standardized I/O ports on the Libre Board like USB adapters for connecting to the Ember One hashboards, Ethernet, HDMI, NVME, fan connectors, and WiFi. Future forks of the Libre Board can then modify the form factor and modify the I/O options and change the fan and hashboard connectors to match Antminers, Whatsminers, or any other miner that the end user wants. The Libre Board will also feature standardized two 100-pin connectors for the compute module so that users can decide if they want to run a RISC-V, ARM, or other processor. Since the mining firmware, Mujina, is Linux based it can be deployed on any module the end user chooses.   
+The source for [libreboard.org](https://libreboard.org), the
+website of Libre Board, the 256 Foundation's open source mining
+control board. The site is built with
+[VitePress](https://vitepress.dev). The board design lives at
+<https://github.com/256foundation/libreboard>.
 
-<p align="center">
-<img width="500" src="assets/Libre-Board-Lander.jpg">
-</p>
+This tree replaces the previous Jekyll site. `main` still serves
+that site. Do not merge until the go-live note below is done.
 
-If this sounds like a grant you want to support, then send The 256 Foundaton a tax deductible donation [here](https://pay.zaprite.com/pl_ZRWeSGjRWG)! Or use The 256 Foundation [PayNym](https://paynym.rs/+appetizingadministration90)!
+## Run the site locally
 
-## Scope:
-One Project Manager position and one engineer position to fulfill the mission of The 256 Foundation, “Dismantle the proprietary mining empire to make Bitcoin and freedom tech accessible to anyone”. This grant has secured funding for:
+You need Node.js and [just](https://just.systems/).
 
-* This grant officially launched on April 5, 2025.
-* One project manager to oversee and ensure mission adherence, timeliness, and execution. 
-* One engineer to develop the Libre Board hardware.
-* Libre Board specifics: Fully open-source with a variety of I/O standards and versatile compute module configuration. 
-* Supporting documentation and specifications. 
-* This project is fully open-source CERN-OHL-S licensed.
-* Excluded from this proposal are sales, distribution, marketing, and customer technical support.
+```
+just install   # npm install
+just dev       # dev server with hot reload
+```
 
-## Deliverables:
-The deliverables after six months will be a mining control board based on the Raspberry Pi Compute Module I/O Board with at least the following connections: 
+Run `just` with no arguments to list the other recipes. Run
+`just checks` before you open a pull request. It builds the site
+and fails on dead internal links.
 
-* USB hub integration
-* support for fan connections
-* NVME expansion
-* two 100-pin connectors for the compute module
-* Ethernet port
-* HDMI port
-* an Rpi 40-pin header
-* a MIPI port for touchscreen
-* accepts 12-24 VDC input power voltage.
+## Where things are
 
-The initial release of Libre Board is being built built in such a way that it supports long-term goals like alternative compute modules such as ARM, x86, and RISC-V
+Pages are markdown, organized by
+[Diataxis](https://diataxis.fr): `tutorial/`, `howto/`,
+`reference/`, `explanation/`. `index.md` is the landing page.
+`community.md` sits outside the modes.
 
-## Timeline:
-The timeline for this grant is six months with the opportunity to extend the grant at the conclusion of each six month cycle, pending negotiations.
+- Nav and sidebar: `.vitepress/config.mts`.
+- The design-repository branch every page links to:
+  `hardwareBranch` in `.vitepress/hardware.ts`. It is `rev3`
+  until that branch is merged to `main` on the hardware
+  repository. Change that one value and the links follow.
+- Theme: CSS-only overrides in `.vitepress/theme/custom.css`.
+- Images and other static assets: `public/`.
+- Brand title face: self-hosted Italianno in `public/fonts/`
+  (OFL, `font-display: swap`). The hero name stays the
+  outlined wordmark in `public/wordmark.svg`. Body text and
+  headings stay Inter.
 
-## Materials:
-Materials for this project’s prototype are included in the budget. Potential materials for the project may include but are not limited to miscellaneous components, various compute modules, custom designed PCBs, and various other tools or 
+[AGENTS.md](AGENTS.md) is the content rule list.
 
-## Community Support
-For help with Libre Board, please use [The 256 Foundation public forum](https://t.me/the256foundation) on Telegram.software.
+## Go-live
 
-## Team Members:
-Lead Engineer = [@Schnitzel](https://x.com/Schnitzel)
+Out of scope for the draft pull request. GitHub Pages for this
+repository is **Deploy from a branch** (`main`, folder `/`),
+with custom domain `libreboard.org`. A merge while that setting
+stands would Jekyll-publish this tree and replace the live site.
 
-Project Manager = [@econoalchemist](https://x.com/econoalchemist)
+Do these together, and not before a human has accepted the
+draft:
 
-## Budget:
-For security reasons, exact dollar amounts are kept confidential. This project budget covers fair-market compensation for one project manager as well as the materials, travel expenses, and living expenses for one engineer for six months. Funds are disbursed monthly in equal amounts. Within 30-days prior to the expiration of this grant cycle, a renewal opportunity will open and be subject to review and negotiation.
+1. In the repository Pages settings, set the source to
+   **GitHub Actions**.
+2. Merge the pull request to `main`.
+
+The workflow is not on `main` until that merge, so the two steps
+belong in one sitting. The merge push builds with base `/`,
+writes `libreboard.org` into the Pages artifact, and deploys.
+DNS and the Pages domain are untouched. Fork builds use base
+`/<repo-name>/` and write no CNAME, so a fork cannot take the
+domain.
+
+The committed `CNAME` file stays in the repository. The workflow
+writes a second copy into the Pages artifact at build time, and
+only for `256foundation/Libre-Board-website`.
+
+The workflow does not run on pull requests. Pushing the draft
+branch does not deploy.
+
+## Design reference
+
+The visual reference is the deployed Mujina site,
+[mujina.org](https://mujina.org), and the VitePress rebuilds of
+[emberone.org](https://github.com/256foundation/Ember-One-website)
+and
+[hydrapool.org](https://github.com/256foundation/Hydra-Pool-website).
+Same stack: VitePress 1.6, Diataxis, the text face, the PCB-grid
+hero, and the Foundation footer.
